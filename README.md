@@ -53,9 +53,8 @@ cd ../frontend && npm install
 Create `backend/.env`:
 ```env
 PORT=5001
-SECRET_KEY=your-strong-secret-key
-GEMINI_API_KEY=your-gemini-api-key
-OPENAI_API_KEY=optional-whisper-key
+SECRET_KEY=meet-**-scribe-***-secret-2026
+GEMINI_API_KEY=AIzaSyDA-4FOqD774rJc45CV7886nFJ3QauDw6w
 ```
 
 ### 3. Start Development Servers
@@ -71,33 +70,6 @@ npm run dev
 ```
 
 Open **http://localhost:5173**
-
----
-
-## Deployment (Web Hosting)
-
-### Backend → Render (Free Tier)
-
-1. Push code to GitHub
-2. Go to [render.com](https://render.com) → New → Web Service
-3. Connect GitHub repo, set **Root Directory** to `backend`
-4. **Build Command**: `npm install`
-5. **Start Command**: `node src/index.js`
-6. Add environment variables: `PORT`, `SECRET_KEY`, `GEMINI_API_KEY`
-7. Deploy — note the URL (e.g. `https://your-api.onrender.com`)
-
-### Frontend → Netlify (Free Tier)
-
-1. Go to [netlify.com](https://netlify.com) → New site from Git
-2. Connect GitHub repo
-3. **Base directory**: `frontend`
-4. **Build command**: `npm run build`
-5. **Publish directory**: `frontend/dist`
-6. After deploy, update `netlify.toml` and `frontend/public/_redirects`:
-   - Replace `https://your-backend-url.onrender.com` with your actual Render backend URL
-7. Redeploy
-
----
 
 ## How It Works
 
@@ -199,15 +171,3 @@ Chi SquareX/
 └── README.md
 ```
 
----
-
-## Live URL
-
-🔗 **[Live Application URL]** — *(to be updated after deployment)*
-
----
-
-## Submission Checklist
-
-- [x] Live URL of the hosted application
-- [x] Brief explanation of how GenAI was used in the development process
