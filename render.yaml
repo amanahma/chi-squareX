@@ -1,0 +1,19 @@
+# Render deployment configuration for backend
+
+services:
+  - type: web
+    name: meet-ai-scribe-api
+    runtime: node
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/index.js
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: SECRET_KEY
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
