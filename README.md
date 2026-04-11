@@ -1,6 +1,6 @@
 # Google Meet AI Scribe
 
-> AI-powered meeting transcription and summarization for Google Meet — built for the Chi SquareX Summer Internship Task.
+> AI-powered meeting transcription and summarization for Google Meet.
 
 ---
 
