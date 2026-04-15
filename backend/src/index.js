@@ -746,7 +746,10 @@ async function runBotWorker(meetingId) {
     addLog(`Chrome found: ${CHROME_PATH}`);
     addLog('Launching browser...');
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const launchArgs = [
+      // Required for running Chrome in containers / Linux without root
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
@@ -794,12 +797,17 @@ async function runBotWorker(meetingId) {
     }
 
     const launchOptions = {
-      executablePath: CHROME_PATH,
-      headless: false, // Google Meet often blocks headless browsers
+      // On Render/Linux: let puppeteer auto-find its bundled Chromium.
+      // On local dev: use system Chrome if found, otherwise puppeteer's Chromium.
+      ...(CHROME_PATH ? { executablePath: CHROME_PATH } : {}),
+      // Use headless in production (Render has no display server).
+      // Use headful locally so Google Meet does not block the bot.
+      headless: isProduction,
       args: launchArgs,
       defaultViewport: { width: 1280, height: 720 },
       ignoreDefaultArgs: ['--enable-automation'],
-      userDataDir,  // Always set — either dedicated bot dir or user-configured
+      // Only set userDataDir in local dev — Render doesn't need a signed-in profile
+      ...(isProduction ? {} : { userDataDir }),
     };
 
     try {
