@@ -20,7 +20,7 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 import { summarizeTranscript, validateAndTrimTranscript } from './services/summarizationService.js';
 import { createMeetingAudioRecorder } from './services/audioRecordingService.js';
 import { createTranscriptionService } from './services/transcription/transcriptionService.js';
@@ -81,9 +81,16 @@ const CHROME_CANDIDATES = [
 ].filter(Boolean);
 
 function findChromePath() {
+  // 1. Check hardcoded candidates (local dev / system Chrome)
   for (const candidate of CHROME_CANDIDATES) {
-    if (existsSync(candidate)) return candidate;
+    if (candidate && existsSync(candidate)) return candidate;
   }
+  // 2. Fallback to Puppeteer's own downloaded browser (necessary for Render/Linux)
+  try {
+    const pPath = puppeteer.executablePath();
+    if (pPath && existsSync(pPath)) return pPath;
+  } catch (_) {}
+  
   return null;
 }
 

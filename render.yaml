@@ -6,7 +6,7 @@ services:
     runtime: node
     region: oregon
     rootDir: backend
-    buildCommand: npm install
+    buildCommand: npm install && npx puppeteer browsers install chrome
     startCommand: node src/index.js
     envVars:
       - key: PORT
@@ -17,3 +17,7 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
+      - key: PUPPETEER_CACHE_DIR
+        value: /opt/render/project/src/backend/.puppeteer_cache
+      - key: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+        value: "false"
