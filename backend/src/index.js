@@ -94,7 +94,18 @@ function findChromePath() {
   return null;
 }
 
-const CHROME_PATH = findChromePath();
+// CHROME_PATH is resolved lazily inside the bot worker so that
+// puppeteer's browser download (during build) completes before we look for it.
+let _chromePath = undefined; // undefined = not yet resolved, null = not found
+function getChromePath() {
+  if (_chromePath !== undefined) return _chromePath;
+  _chromePath = findChromePath();
+  console.log(_chromePath
+    ? `[chrome] Found browser: ${_chromePath}`
+    : '[chrome] No system browser found — will rely on puppeteer bundled Chromium'
+  );
+  return _chromePath;
+}
 
 // ─── Database Setup ───────────────────────────────────────────────────────────
 
@@ -731,7 +742,11 @@ async function runBotWorker(meetingId) {
     addLog('Starting bot workflow...');
     logStage('bot_launch_started');
 
-    if (!CHROME_PATH) {
+    const CHROME_PATH = getChromePath();
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    if (!CHROME_PATH && !isProduction) {
+      // In production, puppeteer will use its bundled Chromium — no CHROME_PATH needed
       addLog('ERROR: Chrome/Chromium not found on this system');
       addLog('Searched paths: ' + CHROME_CANDIDATES.slice(0, 4).join(', '));
       addLog('Set CHROME_PATH environment variable to your Chrome executable');
@@ -743,10 +758,9 @@ async function runBotWorker(meetingId) {
       return;
     }
 
-    addLog(`Chrome found: ${CHROME_PATH}`);
+    addLog(`Browser: ${CHROME_PATH || 'puppeteer bundled Chromium'}`);
     addLog('Launching browser...');
 
-    const isProduction = process.env.NODE_ENV === 'production';
 
     const launchArgs = [
       // Required for running Chrome in containers / Linux without root
