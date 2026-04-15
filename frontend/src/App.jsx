@@ -6,7 +6,11 @@ import Dashboard from './components/Dashboard';
 import SummaryView from './components/SummaryView';
 import './App.css';
 
-const API_BASE = '/api';
+// In production, VITE_API_URL points to the deployed backend (e.g. https://chi-square-x.onrender.com).
+// In local dev, we fall back to '/api' which Vite proxies to the backend.
+const API_BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
 
 // Statuses that indicate work is still in progress
 const IN_PROGRESS_STATUSES = new Set([

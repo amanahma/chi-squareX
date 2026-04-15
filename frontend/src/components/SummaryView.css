@@ -1,4 +1,4 @@
-/* ─── Summary View ───────────────────────────────────────────────────────── */
+/* ─── Summary View — Chi SquareX Theme ───────────────────────────────── */
 .summary-view {
   display: flex;
   flex-direction: column;
@@ -13,6 +13,7 @@
   font-weight: 500;
   color: var(--text-accent);
   transition: opacity var(--transition-fast);
+  font-family: var(--font-heading);
 }
 
 .summary-back-link:hover {
@@ -38,9 +39,10 @@
 
 .summary-view-title {
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: 10px;
+  font-family: var(--font-heading);
 }
 
 .summary-view-overview {
@@ -64,6 +66,7 @@
   border-radius: 20px;
   font-size: 0.78rem;
   color: var(--text-secondary);
+  font-family: var(--font-body);
 }
 
 .meta-chip-warn {
@@ -99,6 +102,7 @@
   font-weight: 700;
   margin-bottom: 16px;
   letter-spacing: -0.01em;
+  font-family: var(--font-heading);
 }
 
 .section-icon {
@@ -120,6 +124,7 @@
   background: var(--bg-glass-hover);
   border-radius: 20px;
   font-size: 0.85rem;
+  border: 1px solid var(--border-subtle);
 }
 
 .participant-avatar {
@@ -133,6 +138,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   color: white;
+  font-family: var(--font-heading);
 }
 
 /* Topics */
@@ -155,6 +161,7 @@
   font-weight: 600;
   margin-bottom: 4px;
   text-transform: capitalize;
+  font-family: var(--font-heading);
 }
 
 .topic-summary {
@@ -213,6 +220,7 @@
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-accent);
+  font-family: var(--font-heading);
 }
 
 .action-deadline {
@@ -266,6 +274,7 @@
   color: var(--text-secondary);
   list-style: none;
   padding: 4px 0;
+  font-family: var(--font-heading);
 }
 
 .transcript-toggle::-webkit-details-marker {
@@ -286,9 +295,10 @@ details[open] .transcript-toggle::before {
 .transcript-content {
   margin-top: 16px;
   padding: 18px;
-  background: rgba(0, 0, 0, 0.3);
+  background: hsla(224, 71%, 4%, 0.6);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  font-family: 'Consolas', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   line-height: 1.7;
   color: var(--text-secondary);
@@ -311,6 +321,7 @@ details[open] .transcript-toggle::before {
 
 .summary-view-empty h2 {
   margin-bottom: 8px;
+  font-family: var(--font-heading);
 }
 
 .summary-view-empty p {
@@ -352,9 +363,10 @@ details[open] .transcript-toggle::before {
 .bot-log-content {
   margin-top: 12px;
   padding: 14px;
-  background: rgba(0, 0, 0, 0.3);
+  background: hsla(224, 71%, 4%, 0.6);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  font-family: 'Consolas', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   line-height: 1.7;
   color: var(--text-muted);
@@ -393,7 +405,7 @@ details[open] .transcript-toggle::before {
   margin-left: 4px;
 }
 
-/* ─── Activity Timeline ──────────────────────────────────────────────────── */
+/* ─── Activity Timeline ──────────────────────────────────────────────── */
 
 .activity-timeline {
   display: flex;
@@ -454,6 +466,7 @@ details[open] .transcript-toggle::before {
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.4;
+  font-family: var(--font-heading);
 }
 
 .activity-step-ts {
@@ -461,6 +474,7 @@ details[open] .transcript-toggle::before {
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
+  font-family: var(--font-mono);
 }
 
 .activity-step-detail {
@@ -506,7 +520,7 @@ details[open] .transcript-toggle::before {
 
 .raw-log-toggle::-webkit-details-marker { display: none; }
 
-/* ─── Key Points List ────────────────────────────────────────────────────── */
+/* ─── Key Points List ────────────────────────────────────────────────── */
 
 .key-points-list {
   list-style: none;
@@ -534,7 +548,7 @@ details[open] .transcript-toggle::before {
   font-weight: 700;
 }
 
-/* ─── Action Items List (flat string format) ─────────────────────────────── */
+/* ─── Action Items List (flat string format) ─────────────────────────── */
 
 .action-items-list {
   display: flex;
@@ -556,11 +570,11 @@ details[open] .transcript-toggle::before {
   content: '☐';
   position: absolute;
   left: 10px;
-  color: #60a5fa;
+  color: var(--accent-blue);
   font-size: 0.85rem;
 }
 
-/* ─── Warning Section ────────────────────────────────────────────────────── */
+/* ─── Warning Section ────────────────────────────────────────────────── */
 
 .warning-section {
   border-color: rgba(251, 191, 36, 0.2);
@@ -572,7 +586,7 @@ details[open] .transcript-toggle::before {
   background: rgba(251, 191, 36, 0.05);
 }
 
-/* ─── Guidance Boxes ─────────────────────────────────────────────────────── */
+/* ─── Guidance Boxes ─────────────────────────────────────────────────── */
 
 .guidance-box {
   border-radius: 8px;
@@ -592,8 +606,8 @@ details[open] .transcript-toggle::before {
 }
 
 .guidance-blue {
-  background: rgba(100, 149, 237, 0.08);
-  border: 1px solid rgba(100, 149, 237, 0.25);
+  background: hsla(217, 100%, 70%, 0.06);
+  border: 1px solid hsla(217, 100%, 70%, 0.2);
 }
 
 .guidance-green {
@@ -601,7 +615,7 @@ details[open] .transcript-toggle::before {
   border: 1px solid rgba(52, 211, 153, 0.2);
 }
 
-/* ─── Retry Section ──────────────────────────────────────────────────────── */
+/* ─── Retry Section ──────────────────────────────────────────────────── */
 
 .retry-section {
   margin-top: 16px;
@@ -620,6 +634,7 @@ details[open] .transcript-toggle::before {
 .retry-char-count {
   font-size: 0.78rem;
   color: var(--text-muted);
+  font-family: var(--font-mono);
 }
 
 .retry-saved-hint {
@@ -632,14 +647,14 @@ details[open] .transcript-toggle::before {
   line-height: 1.5;
 }
 
-/* ─── New Status Badges ──────────────────────────────────────────────────── */
+/* ─── New Status Badges ──────────────────────────────────────────────── */
 
 .status-chunking_transcript,
 .status-summarizing_chunks,
 .status-merging_summaries {
-  background: rgba(139, 92, 246, 0.15);
-  border-color: rgba(139, 92, 246, 0.3);
-  color: #a78bfa;
+  background: hsla(217, 80%, 60%, 0.15);
+  border-color: hsla(217, 80%, 60%, 0.3);
+  color: hsl(217, 80%, 70%);
 }
 
 .status-partial_summary {
@@ -653,4 +668,3 @@ details[open] .transcript-toggle::before {
   border-color: rgba(251, 191, 36, 0.3);
   color: #fbbf24;
 }
-

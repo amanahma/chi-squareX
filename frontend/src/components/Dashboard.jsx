@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import SummaryCard from './SummaryCard';
 import './Dashboard.css';
 
+const API_BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
+
 function Dashboard({ user, sessions, onSendBot, onRetry, onDelete, loading }) {
   const [meetLink, setMeetLink] = useState('');
   const [transcript, setTranscript] = useState('');
@@ -17,7 +21,7 @@ function Dashboard({ user, sessions, onSendBot, onRetry, onDelete, loading }) {
     setSetupMessage('');
     try {
       const token = localStorage.getItem('meetai_token');
-      const resp = await fetch('/api/setup-profile', {
+      const resp = await fetch(`${API_BASE}/setup-profile`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });

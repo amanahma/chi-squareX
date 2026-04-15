@@ -1,4 +1,4 @@
-/* ─── Dashboard ──────────────────────────────────────────────────────────── */
+/* ─── Dashboard — Chi SquareX Theme ──────────────────────────────────── */
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -16,9 +16,10 @@
 
 .dashboard-title {
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: 6px;
+  font-family: var(--font-heading);
 }
 
 .dashboard-subtitle {
@@ -44,11 +45,12 @@
 
 .stat-number {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 700;
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: var(--font-heading);
 }
 
 .stat-label {
@@ -57,6 +59,7 @@
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  font-family: var(--font-heading);
 }
 
 /* Send Bot Section */
@@ -80,12 +83,14 @@
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
+  box-shadow: 0 4px 16px hsla(217, 100%, 70%, 0.2);
 }
 
 .send-bot-header h2 {
   font-size: 1.15rem;
   font-weight: 700;
   margin-bottom: 2px;
+  font-family: var(--font-heading);
 }
 
 .send-bot-header p {
@@ -138,6 +143,7 @@
 .sessions-header h2 {
   font-size: 1.2rem;
   font-weight: 700;
+  font-family: var(--font-heading);
 }
 
 .sessions-count {
@@ -145,6 +151,7 @@
   color: var(--text-muted);
   padding: 4px 12px;
   background: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
 }
 
@@ -168,6 +175,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 6px;
+  font-family: var(--font-heading);
 }
 
 .sessions-empty p {
@@ -198,7 +206,7 @@
   font-size: 0.82rem;
   cursor: pointer;
   padding: 8px 0;
-  font-family: var(--font-family);
+  font-family: var(--font-body);
   transition: color var(--transition-fast);
 }
 
@@ -221,8 +229,8 @@
 }
 
 @keyframes pulse-glow {
-  from { box-shadow: 0 0 0 rgba(167, 139, 250, 0); }
-  to { box-shadow: 0 0 12px rgba(167, 139, 250, 0.2); }
+  from { box-shadow: 0 0 0 hsla(217, 100%, 70%, 0); }
+  to { box-shadow: 0 0 16px hsla(217, 100%, 70%, 0.18); }
 }
 
 /* Warning feedback */

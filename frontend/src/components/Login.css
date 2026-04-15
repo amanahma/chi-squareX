@@ -1,4 +1,4 @@
-/* ─── Login Page ─────────────────────────────────────────────────────────── */
+/* ─── Login Page — Chi SquareX Theme ─────────────────────────────────── */
 .login-page {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -16,21 +16,24 @@
   display: inline-block;
   padding: 6px 16px;
   border-radius: 20px;
-  background: rgba(167, 139, 250, 0.12);
+  background: hsla(217, 100%, 70%, 0.1);
   color: var(--text-accent);
   font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 24px;
   letter-spacing: 0.03em;
+  border: 1px solid hsla(217, 100%, 70%, 0.2);
+  font-family: var(--font-heading);
 }
 
 .login-hero-title {
   font-size: 2.8rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.03em;
   margin-bottom: 18px;
   color: var(--text-primary);
+  font-family: var(--font-heading);
 }
 
 .login-hero-subtitle {
@@ -75,6 +78,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
+  font-family: var(--font-heading);
 }
 
 .login-feature span {
@@ -90,12 +94,14 @@
   gap: 20px;
   max-width: 440px;
   margin-left: auto;
+  box-shadow: var(--glow-primary);
 }
 
 .login-form-header h2 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 4px;
+  font-family: var(--font-heading);
 }
 
 .login-form-header p {
@@ -131,7 +137,7 @@
   font-weight: 600;
   cursor: pointer;
   font-size: 0.85rem;
-  font-family: var(--font-family);
+  font-family: var(--font-heading);
 }
 
 .login-toggle-btn:hover {
