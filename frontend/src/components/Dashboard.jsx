@@ -6,6 +6,9 @@ const API_BASE = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
   : '/api';
 
+// Setup Bot Profile is only meaningful in local dev (needs a display server to open a headed browser)
+const IS_LOCAL_DEV = !import.meta.env.VITE_API_URL || import.meta.env.VITE_API_URL.includes('localhost');
+
 function Dashboard({ user, sessions, onSendBot, onRetry, onDelete, loading }) {
   const [meetLink, setMeetLink] = useState('');
   const [transcript, setTranscript] = useState('');
@@ -20,7 +23,7 @@ function Dashboard({ user, sessions, onSendBot, onRetry, onDelete, loading }) {
     setSetupStatus(null);
     setSetupMessage('');
     try {
-      const token = localStorage.getItem('meetai_token');
+      const token = localStorage.getItem('token');
       const resp = await fetch(`${API_BASE}/setup-profile`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
@@ -97,27 +100,36 @@ function Dashboard({ user, sessions, onSendBot, onRetry, onDelete, loading }) {
       </div>
 
       {/* Profile Setup */}
-      <div className="glass-panel animate-fade-in-up" style={{ animationDelay: '0.05s', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-        <span style={{ fontSize: '0.9em', opacity: 0.8 }}>🔐 Bot needs a signed-in Chrome profile to join meetings.</span>
-        <button
-          className="btn btn-outline btn-sm"
-          onClick={handleSetupProfile}
-          disabled={setupLoading || setupStatus === 'open'}
-          style={{ whiteSpace: 'nowrap' }}
-        >
-          {setupLoading ? '⏳ Launching...' : setupStatus === 'open' ? '🟢 Browser Open' : '🔧 Setup Bot Profile'}
-        </button>
-        {setupStatus === 'open' && (
-          <span style={{ fontSize: '0.85em', color: '#4ade80' }}>
-            ✅ Sign into Google in the opened browser, then close it when done.
+      {IS_LOCAL_DEV ? (
+        <div className="glass-panel animate-fade-in-up" style={{ animationDelay: '0.05s', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '0.9em', opacity: 0.8 }}>🔐 Bot needs a signed-in Chrome profile to join meetings.</span>
+          <button
+            className="btn btn-outline btn-sm"
+            onClick={handleSetupProfile}
+            disabled={setupLoading || setupStatus === 'open'}
+            style={{ whiteSpace: 'nowrap' }}
+          >
+            {setupLoading ? '⏳ Launching...' : setupStatus === 'open' ? '🟢 Browser Open' : '🔧 Setup Bot Profile'}
+          </button>
+          {setupStatus === 'open' && (
+            <span style={{ fontSize: '0.85em', color: '#4ade80' }}>
+              ✅ Sign into Google in the opened browser, then close it when done.
+            </span>
+          )}
+          {setupStatus === 'error' && (
+            <span style={{ fontSize: '0.85em', color: '#f87171' }}>
+              ❌ {setupMessage}
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="glass-panel animate-fade-in-up" style={{ animationDelay: '0.05s', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '1.1em' }}>☁️</span>
+          <span style={{ fontSize: '0.9em', opacity: 0.85 }}>
+            <strong>Cloud mode:</strong> Bot runs headlessly on the server. Paste your meeting transcript below for instant AI summarization.
           </span>
-        )}
-        {setupStatus === 'error' && (
-          <span style={{ fontSize: '0.85em', color: '#f87171' }}>
-            ❌ {setupMessage}
-          </span>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Send Bot Section */}
       <div className="send-bot-section glass-panel animate-fade-in-up" style={{ animationDelay: '0.1s' }}>

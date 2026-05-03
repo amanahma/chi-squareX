@@ -3573,8 +3573,20 @@ async function failWithSignInMessage(meetingId, addLog, browser) {
 let setupBrowserInstance = null;
 
 app.post('/api/setup-profile', async (_req, res) => {
-  if (!CHROME_PATH) {
-    return res.status(500).json({ error: 'Chrome not found. Install Google Chrome or set CHROME_PATH.' });
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  // In production (Render/Linux), there is no display server — a headed browser
+  // cannot be opened for manual Google sign-in. Return a clear explanation.
+  if (isProduction) {
+    return res.status(400).json({
+      error: 'Profile setup is only available in local development. On the deployed server, the bot uses Puppeteer\'s bundled Chromium in headless mode. To join Google Meet, use the "Paste Transcript" option instead.',
+    });
+  }
+
+  // FIXED: was checking undefined module-level CHROME_PATH — must call getChromePath()
+  const resolvedChromePath = getChromePath();
+  if (!resolvedChromePath) {
+    return res.status(500).json({ error: 'Chrome not found. Install Google Chrome or set CHROME_PATH in backend/.env.' });
   }
 
   if (setupBrowserInstance) {
@@ -3589,7 +3601,7 @@ app.post('/api/setup-profile', async (_req, res) => {
 
   try {
     setupBrowserInstance = await puppeteer.launch({
-      executablePath: CHROME_PATH,
+      executablePath: resolvedChromePath,
       headless: false,
       args: [
         '--no-sandbox',
@@ -4066,7 +4078,7 @@ function startHttpServer(port, attemptsLeft) {
     console.log('  ========================');
     console.log(`  Server:  http://localhost:${port}`);
     console.log(`  Gemini:  ${GEMINI_API_KEY ? 'Configured' : 'NOT configured (set GEMINI_API_KEY in .env)'}`);
-    console.log(`  Chrome:  ${CHROME_PATH || 'NOT found (set CHROME_PATH in .env)'}`);
+    console.log(`  Chrome:  ${getChromePath() || 'NOT found (set CHROME_PATH in .env)'}`);
     console.log('');
   });
 }
