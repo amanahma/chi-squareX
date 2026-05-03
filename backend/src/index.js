@@ -16,7 +16,7 @@ import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
 import http from 'node:http';
-import { existsSync, writeFileSync } from 'node:fs';
+import { existsSync, writeFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
@@ -85,7 +85,29 @@ function findChromePath() {
   for (const candidate of CHROME_CANDIDATES) {
     if (candidate && existsSync(candidate)) return candidate;
   }
-  // 2. Fallback to Puppeteer's own downloaded browser (necessary for Render/Linux)
+
+  // 2. Scan PUPPETEER_CACHE_DIR explicitly (Render sets this to a custom path).
+  // Puppeteer v20+ stores chrome at:
+  //   {PUPPETEER_CACHE_DIR}/chrome/linux-{version}/chrome-linux64/chrome
+  const cacheDir = process.env.PUPPETEER_CACHE_DIR;
+  if (cacheDir) {
+    try {
+      const chromeCacheDir = join(cacheDir, 'chrome');
+      if (existsSync(chromeCacheDir)) {
+        const versions = readdirSync(chromeCacheDir);
+        for (const ver of versions) {
+          // v20+ path: chrome-linux64/chrome
+          const c1 = join(chromeCacheDir, ver, 'chrome-linux64', 'chrome');
+          if (existsSync(c1)) return c1;
+          // Legacy path: chrome-linux/chrome
+          const c2 = join(chromeCacheDir, ver, 'chrome-linux', 'chrome');
+          if (existsSync(c2)) return c2;
+        }
+      }
+    } catch (_) {}
+  }
+
+  // 3. Fallback to Puppeteer's own downloaded browser (necessary for Render/Linux)
   try {
     const pPath = puppeteer.executablePath();
     if (pPath && existsSync(pPath)) return pPath;
